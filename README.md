@@ -7,7 +7,7 @@ Private repository for the GeekDeal Digest MVP: gaming/nerd-culture news and cur
 - Static single-page site connected read-only to the dedicated Supabase project.
 - Published offers and stories only; empty states are real, not demo content.
 - Filters for market, category, store, condition, and price/date sorting.
-- “Verified” badge is shown only for an actual offer-price observation less than 24 hours old.
+- "Verified" badge is shown only for an actual offer-price check less than 24 hours old.
 - Affiliate links are labeled near offers.
 - Newsletter and outdated-deal reporting are intentionally inactive until a validated backend and email provider are implemented.
 - No sample data is seeded in the database.
@@ -22,6 +22,8 @@ The initial schema is at `supabase/migrations/20261020_initial_schema.sql`. It w
 
 ## Deployment
 
-The repository includes a static Vercel configuration, but no Vercel project or deployment has been created. The portal is intended to earn affiliate commissions and advertising revenue. Vercel states that Hobby is for personal, non-commercial use; use Vercel Pro (currently listed at US$20/month plus applicable taxes/usage) or a different host whose current terms allow the site's commercial use. Do not deploy this commercial project on Vercel Hobby.
+The owner authorized evaluation of Cloudflare Pages Free for an early commercial launch on 2026-10-20, confirmed the terms caveat, and authorized public publication **after initial real content is provided**. Do not publish an empty portal or fictitious content. Cloudflare's official self-serve terms and Developer Platform terms reviewed do not explicitly prohibit commercial use on the Free plan; a Cloudflare Community MVP reply (May 20, 2026) says Free plans can be used for business, while warning of no SLA, low traffic priority, shared IPs, and no direct technical support. This forum guidance is not contractual permission. The owner accepted this caveat. References: https://www.cloudflare.com/terms ; https://www.cloudflare.com/service-specific-terms-developer-platform/ ; https://community.cloudflare.com/t/use-free-plan-for-commercial-project-follow-up/732438
 
-For Vercel, the static build command copies only `index.html` and `supabase-config.js` to `public/`; the database migration and README are not published as website files.
+Pages supports static HTML and private GitHub repos. Current project setup is prepared in `build-pages.sh` plus `_headers`; build output contains only `index.html`, `supabase-config.js`, and `_headers`. Once initial real editorial content has been provided and published in Supabase, connect the private GitHub repository to Pages, set production branch `main`, build command `sh build-pages.sh`, output directory `dist-pages`, then deploy and verify the live URL. Pages Free limits are documented at https://developers.cloudflare.com/pages/platform/limits/.
+
+No Cloudflare account has been connected and no Pages project/deployment exists yet. Do not deploy the empty portal or fabricated content. The owner may subscribe to Vercel Pro after the portal has generated its first financial return; do not deploy this commercial portal on Vercel Hobby.
