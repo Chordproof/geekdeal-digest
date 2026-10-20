@@ -22,4 +22,6 @@ The initial schema is at `supabase/migrations/20261020_initial_schema.sql`. It w
 
 ## Deployment
 
-This repository is not yet connected to a hosting project. The product is intended to earn affiliate commissions and advertising revenue, so confirm the hosting plan permits commercial use before publishing. The current Vercel Hobby plan is described by Vercel as for personal, non-commercial use; no Vercel project/deployment has been created for this repository.
+The repository includes a static Vercel configuration, but no Vercel project or deployment has been created. The portal is intended to earn affiliate commissions and advertising revenue. Vercel states that Hobby is for personal, non-commercial use; use Vercel Pro (currently listed at US$20/month plus applicable taxes/usage) or a different host whose current terms allow the site's commercial use. Do not deploy this commercial project on Vercel Hobby.
+
+For Vercel, the static build command copies only `index.html` and `supabase-config.js` to `public/`; the database migration and README are not published as website files.
