@@ -28,9 +28,11 @@ jobs:
         run: python run.py
 
       - name: Commit audit log
+        continue-on-error: true
         run: |
+          mkdir -p data/raw
           git config user.name "geekdeal-bot"
           git config user.email "bot@geekdeal.local"
-          git add data/raw
+          git add data/raw || true
           git diff --staged --quiet || git commit -m "chore: audit log"
-          git push
+          git push || true
