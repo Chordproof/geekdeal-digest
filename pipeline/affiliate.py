@@ -27,9 +27,21 @@ ALLOWED_HOSTS = {
     "fanatical": {"fanatical.com", "www.fanatical.com"},
     "humble": {"humblebundle.com", "www.humblebundle.com"},
     "gog": {"gog.com", "www.gog.com"},
+    "greenman": {"greenmangaming.com", "www.greenmangaming.com"},
+    "gamesplanet": {"gamesplanet.com", "us.gamesplanet.com"},
+    "wingamestore": {"wingamestore.com", "www.wingamestore.com"},
+    "gamebillet": {"gamebillet.com", "www.gamebillet.com"},
+    "voidu": {"voidu.com", "www.voidu.com"},
+    "dlgamer": {"dlgamer.com", "www.dlgamer.com"},
+    "nuuvem": {"nuuvem.com", "www.nuuvem.com"},
 }
 
-PARAM_NAME = {"amazon": "tag", "ebay": "campid", "walmart": "u1", "bestbuy": "ref", "fanatical": "ref", "humble": "partner", "gog": "pp"}
+PARAM_NAME = {
+    "amazon": "tag", "ebay": "campid", "walmart": "u1", "bestbuy": "ref",
+    "fanatical": "ref", "humble": "partner", "gog": "pp",
+    "greenman": "ref", "gamesplanet": "ref", "wingamestore": "ref",
+    "gamebillet": "ref", "voidu": "ref", "dlgamer": "ref", "nuuvem": "ref",
+}
 
 def build_affiliate_url(retailer_slug, product_url):
     retailer = RETAILER_BY_SLUG.get(retailer_slug)
