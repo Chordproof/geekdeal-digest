@@ -8,29 +8,44 @@ API = "https://api.isthereanydeal.com"
 KEY = os.environ.get("ITAD_API_KEY", "")
 USER_AGENT = "GeekDealDigest/1.0 (+https://geekdeal.example)"
 
-# shop id da ITAD -> nosso slug
+# IDs reais confirmados via /service/shops/v1
 SHOP_MAP = {
-    61: "fanatical",
-    37: "gog",
-    15: "humble",
-    27: "greenman",
-    35: "gamesplanet",
-    48: "wingamestore",
-    53: "gamebillet",
-    62: "voidu",
-    69: "dlgamer",
-    71: "nuuvem",
-    24: "steam",
+    61: "steam",
     16: "epic",
+    35: "gog",
+    6: "fanatical",
+    37: "humble",
+    36: "greenman",
+    29: "gamesplanet",
+    64: "wingamestore",
+    20: "gamebillet",
+    13: "dlgamer",
+    50: "nuuvem",
+    42: "indiegala",
+    24: "gamersgate",
+    2: "allyouplay",
+    49: "newegg",
 }
 
-def _get(path, params):
-    qs = "&".join(k + "=" + str(v) for k, v in params.items())
-    url = API + path + "?" + qs
+def _get(path, params=None):
+    url = API + path
+    if params:
+        url += "?" + "&".join(k + "=" + str(v) for k, v in params.items())
     req = urllib.request.Request(url, headers={
         "User-Agent": USER_AGENT,
         "ITAD-API-Key": KEY,
     })
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+def _post(path, params, body):
+    url = API + path + "?" + "&".join(k + "=" + str(v) for k, v in params.items())
+    data = json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, headers={
+        "User-Agent": USER_AGENT,
+        "ITAD-API-Key": KEY,
+        "Content-Type": "application/json",
+    }, method="POST")
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
@@ -39,12 +54,22 @@ def fetch(limit=100):
         print("[itad] ITAD_API_KEY ausente, pulando fonte")
         return
 
-    deals = _get("/deals/v2", {
-        "country": "US",
-        "shops": ",".join(str(s) for s in SHOP_MAP),
-        "sort": "cut",
-        "limit": limit,
-    })
+    # 1. Busca os IDs internos dos jogos em promocao
+    try:
+        deals = _get("/deals/v2", {
+            "key": KEY,
+            "country": "US",
+            "shops": ",".join(str(s) for s in SHOP_MAP),
+            "sort": "cut",
+            "limit": limit,
+        })
+    except Exception as exc:
+        print("[itad] /deals/v2 falhou: " + str(exc))
+        return
+
+    if not isinstance(deals, list):
+        print("[itad] resposta inesperada em /deals/v2")
+        return
 
     print("[itad] " + str(len(deals)) + " ofertas recebidas")
 
@@ -70,7 +95,7 @@ def fetch(limit=100):
             continue
 
         title = (d.get("title") or "").strip()
-        url = (d.get("url") or "").strip()
+        url = (deal.get("url") or "").strip()
         if not title or not url.startswith("https://"):
             continue
 
@@ -80,7 +105,7 @@ def fetch(limit=100):
             "product_url": url,
             "offer_price": offer,
             "reference_price": normal,
-            "currency": "USD",
+            "currency": price.get("currency", "USD"),
             "market": "US",
             "metacritic": None,
             "discount_pct": cut,
