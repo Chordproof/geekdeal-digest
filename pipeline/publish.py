@@ -62,7 +62,7 @@ def record_price_check(deal_id, c):
         "availability": "in_stock",
         "source_url": c.source_url or c.product_url,
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "evidence_note": "Pipeline automatizado CheapShark",
+        "evidence_note": "Pipeline automatizado ITAD",
     }
     _req("POST", "deal_price_checks", [payload])
 
