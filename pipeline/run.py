@@ -6,7 +6,7 @@ import publish
 from affiliate import affiliate_meta
 from config import RETAILERS, RETAILER_BY_SLUG, MAX_OFFERS_PER_RUN, CATEGORY_KEYWORDS
 from score import score
-from sources import itad, epic_free, rss
+from sources import cheapshark, epic_free, rss
 
 def categorize(title):
     low = title.lower()
@@ -65,14 +65,14 @@ def main():
     raw, approved, rejected = [], [], []
     seen = set()
 
-    # Fonte 1 - ITAD (ofertas com desconto)
+    # Fonte 1 - CheapShark (ofertas com desconto)
     try:
-        for row in itad.fetch():
+        for row in cheapshark.fetch(limit=60, min_discount=50):
             _process_deal(row, seen, raw, approved, rejected)
     except Exception as exc:
-        print("[run] itad falhou: " + str(exc))
+        print("[run] cheapshark falhou: " + str(exc))
 
-    # Fonte 2 - Epic jogos gratis (bypass dos gates de desconto)
+    # Fonte 2 - Epic jogos gratis
     try:
         for row in epic_free.fetch():
             slug = publish.slugify("epic-free-" + row["title"])
@@ -92,10 +92,10 @@ def main():
     except Exception as exc:
         print("[run] epic falhou: " + str(exc))
 
-    # Fonte 3 - RSS das lojas com afiliado
+    # Fonte 3 - RSS (log apenas, sem gravacao)
     for feed_key in ("fanatical", "humble", "gog"):
         try:
-            for item in rss.fetch(feed_key, limit=10):
+            for item in rss.fetch(feed_key, limit=5):
                 print("[run] rss " + feed_key + ": " + item["title"][:60])
         except Exception as exc:
             print("[run] rss " + feed_key + " falhou: " + str(exc))
