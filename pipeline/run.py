@@ -93,7 +93,7 @@ def main():
         print("[run] epic falhou: " + str(exc))
 
     # Fonte 3 - RSS (log apenas, sem gravacao)
-    for feed_key in ("fanatical", "humble", "gog"):
+    for feed_key in ("gog", "xbox_wire", "playstation_blog"):
         try:
             for item in rss.fetch(feed_key, limit=5):
                 print("[run] rss " + feed_key + ": " + item["title"][:60])
