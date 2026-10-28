@@ -6,10 +6,9 @@ import xml.etree.ElementTree as ET
 USER_AGENT = "GeekDealDigest/1.0"
 
 FEEDS = {
-    "fanatical": "https://www.fanatical.com/en/rss/new",
-    "humble": "https://www.humblebundle.com/store/rss",
     "gog": "https://www.gog.com/news/feed",
     "xbox_wire": "https://news.xbox.com/en-us/feed/",
+    "playstation_blog": "https://blog.playstation.com/feed/",
 }
 
 def _clean(text):
@@ -24,9 +23,15 @@ def fetch(feed_key, limit=10):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
         with urllib.request.urlopen(req, timeout=25) as resp:
-            root = ET.fromstring(resp.read())
+            raw = resp.read()
     except Exception as exc:
         print("[rss] " + feed_key + " falhou: " + str(exc))
+        return
+
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError as exc:
+        print("[rss] " + feed_key + " XML invalido: " + str(exc))
         return
 
     count = 0
