@@ -1,12 +1,12 @@
 from __future__ import annotations
 import json
 import time
+import urllib.parse
 import urllib.request
 
 API = "https://www.cheapshark.com/api/1.0"
 USER_AGENT = "GeekDealDigest/1.0 (+https://geekdeal.example)"
 
-# storeID da CheapShark -> nosso slug
 STORE_MAP = {
     "1": "steam",
     "2": "gamersgate",
@@ -33,13 +33,12 @@ STORE_MAP = {
 def _get(path, params=None):
     url = API + path
     if params:
-        url += "?" + "&".join(k + "=" + str(v) for k, v in params.items())
+        url += "?" + urllib.parse.urlencode(params, safe=",")
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 def fetch(limit=60, min_discount=50):
-    """Busca ofertas na CheapShark. Retorna dicts no formato do pipeline."""
     try:
         deals = _get("/deals", {
             "storeID": ",".join(STORE_MAP.keys()),
@@ -83,7 +82,6 @@ def fetch(limit=60, min_discount=50):
         if not title or not deal_id:
             continue
 
-        # Link de redirect da CheapShark -> loja real
         url = "https://www.cheapshark.com/redirect?dealID=" + deal_id
 
         yield {
