@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://geekdeal.pages.dev/game-deals.html">
+<!-- Search Console: paste the token from Google here (or set GEEKDDEAL_GSC). -->
+<meta name="google-site-verification" content="">
+<title>Game Deals — Steam, Xbox, Nintendo &amp; More | GeekDeal</title>
+<meta name="description" content="Live game deals from Steam, Xbox, Nintendo eShop, GOG, Epic, Humble and Fanatical. Every price checked automatically, every discount measured against a real baseline.">
+<meta property="og:title" content="Game Deals — Steam, Xbox, Nintendo &amp; More">
+<meta property="og:description" content="Live, automatically verified game deals across the major storefronts.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;850&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="logo" href="index.html"><span class="logo-mark">🎮</span><span>Geek<span class="accent">Deal</span></span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="news.html">News</a>
+        <a href="game-deals.html" class="is-current">Game Deals</a>
+
+        <a href="about.html">About</a>
+        <a class="nav-cta" href="newsletter.html">Get the newsletter</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Refreshed automatically · US pricing</span>
+    <h1>Game deals, <span class="grad">checked by machine.</span></h1>
+    <p>Steam, Xbox, Nintendo eShop, GOG, Epic, Humble and Fanatical in one place. Our pipeline pulls the live price, compares it to the store's own list price, throws out anything without a credible baseline, and writes a short buying note for the best of the batch.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#live-deals">See live deals →</a>
+      <a class="btn btn-ghost" href="#deal-notes">Read the deal notes</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="live-deals">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2><span class="bar"></span>Live game deals</h2>
+        <p class="sub">Sorted by deal score — discount depth, review signal, absolute saving and freshness. <span id="game-count"></span></p>
+      </div>
+    </div>
+
+    <div class="store-chips">
+      <button class="store-chip is-active" data-store-filter="all">All stores</button>
+      <button class="store-chip" data-store-filter="steam">Steam</button>
+      <button class="store-chip" data-store-filter="xbox">Xbox</button>
+      <button class="store-chip" data-store-filter="nintendo">Nintendo</button>
+      <button class="store-chip" data-store-filter="gog">GOG</button>
+      <button class="store-chip" data-store-filter="humble">Humble</button>
+      <button class="store-chip" data-store-filter="fanatical">Fanatical</button>
+      <button class="store-chip" data-store-filter="greenmangaming">Green Man Gaming</button>
+    </div>
+
+    <div class="sort-bar">
+      <label for="deal-sort">Sort by</label>
+      <select id="deal-sort">
+        <option value="score">Best deal (score)</option>
+        <option value="discount">Biggest discount</option>
+        <option value="price">Lowest price</option>
+        <option value="lowest">Lowest we have tracked</option>
+      </select>
+    </div>
+    <div class="game-grid" data-game-grid data-base="" data-page="36"></div>
+
+    <div class="notice" style="margin-top:26px">
+      <b>How this list is built.</b> Every card comes from a public storefront feed (Steam's featured API, CheapShark's store index, Nintendo's eShop sales feed and Microsoft's Xbox catalogue). A deal is only published if the price is above zero, the reference price is the store's own list price, the discount clears 15%, the link points at an authorised storefront, and the title has a credible review signal. We never invent a "was" price and we never run a fake countdown.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="deal-notes">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2><span class="bar"></span>Deal notes</h2>
+        <p class="sub">A short, sales-minded write-up for the strongest picks — what it is, why the price matters, and who it suits.</p>
+      </div>
+    </div>
+    <div class="news-grid" data-article-grid data-base="" data-limit="6"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="newsletter">
+      <div>
+        <h2>Get the good ones by email</h2>
+        <p>One email a day with the deals that cleared our gates. No filler, no fake urgency.</p>
+      </div>
+      <form class="nl-form" data-source="game-deals" novalidate>
+        <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-disclosure">
+      <b>Affiliate disclosure:</b> GeekDeal earns a commission when you buy through links on this site, at no extra cost to you. This never changes which deals we cover or how we rank them. Prices and availability are accurate as of the timestamp shown on each deal and may change.
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="index.html"><span class="logo-mark">🎮</span><span>Geek<span class="accent">Deal</span></span></a>
+        <p>Verified gaming and geek deals for the US, with the price history to prove it.</p>
+      </div>
+      <div class="footer-col"><h4>Deals</h4><a href="game-deals.html">Game Deals</a><a href="news.html">News</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="about.html">About</a><a href="contact.html">Contact</a><a href="newsletter.html">Newsletter</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Report an issue</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2026</span> GeekDeal. All rights reserved.</span><span>Made for gamers in the US 🇺🇸</span></div>
+  </div>
+</footer>
+
+<script src="assets/data/game-deals.js"></script>
+<script src="assets/data/articles.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/games.js"></script>
+<script src="assets/data/site-config.js"></script>
+<script src="assets/js/newsletter.js"></script>
+<script src="assets/js/analytics.js"></script>
+</body>
+</html>
