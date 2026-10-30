@@ -1,0 +1,69 @@
+{
+ "startedAt": "2026-10-23T14:26:19-04:00",
+ "finishedAt": "2026-10-23T14:26:25-04:00",
+ "sources": {
+  "steam": {
+   "fetched": 10
+  },
+  "cheapshark": {
+   "fetched": 420
+  },
+  "nintendo": {
+   "fetched": 40
+  },
+  "xbox": {
+   "fetched": 45
+  }
+ },
+ "rawDeals": 515,
+ "afterDedupe": 515,
+ "accepted": 132,
+ "rejected": 383,
+ "rejectionReasons": {
+  "quality_unproven": 356,
+  "discount_below_floor": 112,
+  "baseline_unverified": 23,
+  "baseline_implausible": 12,
+  "title_missing_or_junk": 6
+ },
+ "belowScoreGate": 22,
+ "affiliate": {
+  "enabled": [],
+  "unconfigured": [
+   "amazon",
+   "bestbuy",
+   "fanatical",
+   "gamebillet",
+   "gamersgate",
+   "gamesplanet",
+   "gog",
+   "greenmangaming",
+   "humble",
+   "indiegala",
+   "newegg",
+   "ubisoft",
+   "walmart",
+   "wingamestore",
+   "xbox"
+  ],
+  "invalid": {},
+  "no_program": [
+   "epic",
+   "nintendo",
+   "steam"
+  ],
+  "cards": 62,
+  "eligible": 36,
+  "eligiblePct": 58.1,
+  "tagged": 0,
+  "taggedPct": 0.0
+ },
+ "publishedCards": 62,
+ "publishedArticles": 6,
+ "publishedLandings": 56,
+ "minScore": 38,
+ "minDiscountPct": 15,
+ "dryRun": false,
+ "historyRows": 0,
+ "historyTracked": 62
+}
