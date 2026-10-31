@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeekDeal Digest — Verified Deals for PC, Gaming, Tech and Geek</title>
+  <meta name="description" content="Verified deals on PC hardware, gaming gear, tech and geek products for the US. Every price stamped with the exact time of the check.">
+  <link rel="canonical" href="https://geekdealdigest.com/">
+  <link rel="stylesheet" href="assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "GeekDeal Digest",
+    "url": "https://geekdealdigest.com/",
+    "description": "Verified deals on PC hardware, gaming gear, tech and geek products for the US market."
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">🎮 GeekDeal Digest</a>
+    <nav aria-label="Main navigation">
+      <a href="deals/index.html">Deals</a>
+      <a href="reviews/index.html">Reviews</a>
+      <a href="guides/index.html">Guides</a>
+      <a href="reviews/index.html">News</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <section class="hero">
+        <h1>Verified deals for PC, gaming, tech and geek.</h1>
+        <p>We pull the price from the store's own feed, compare it to the store's list price, and stamp the card with the exact time of the check. We never invent a "was" price and we never run a fake countdown.</p>
+        <p style="margin-top:1.5rem">
+          <a class="btn btn-primary" href="deals/index.html">Browse all deals</a>
+          <a class="btn btn-secondary" href="reviews/index.html" style="margin-left:.5rem">Read reviews</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Deals of the Day</h2>
+        <div id="home-deals" class="card-grid"></div>
+        <p style="margin-top:1rem">
+          <a href="deals/index.html">See all deals →</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Latest Reviews</h2>
+        <div class="card-grid">
+          <article class="article-card">
+            <span class="meta">Reviews</span>
+            <h3>Reviews and comparisons</h3>
+            <p>Specs, comparisons and buying verdicts for PC, gaming and tech gear.</p>
+            <a href="reviews/index.html">Browse reviews →</a>
+          </article>
+          <article class="article-card">
+            <span class="meta">Guides</span>
+            <h3>Buying guides</h3>
+            <p>What to look for before you spend money on a new mouse, keyboard or monitor.</p>
+            <a href="guides/index.html">Browse guides →</a>
+          </article>
+          <article class="article-card">
+            <span class="meta">About</span>
+            <h3>How we verify prices</h3>
+            <p>Our pipeline runs every 6 hours. Here is exactly what it does — and what it does not do.</p>
+            <a href="about.html">Read how it works →</a>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Buying Guides</h2>
+        <p>Not sure what to buy? Start with a guide instead of a price.</p>
+        <p><a class="btn btn-secondary" href="guides/index.html">Open the guides</a></p>
+      </section>
+
+      <aside class="disclosure-block" aria-label="Affiliate disclosure">
+        <strong>Affiliate disclosure:</strong> GeekDeal Digest participates in affiliate programmes.
+        When you click a store link and buy, we may earn a commission at no extra cost to you.
+        Cards show whether a link is an "Affiliate link" or a "Direct store link". Read our full
+        <a href="disclosure.html">Affiliate Disclosure</a>.
+      </aside>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-cols">
+      <div>
+        <h3>Deals</h3>
+        <a href="index.html">Home</a>
+        <a href="deals/index.html">All deals</a>
+        <a href="reviews/index.html">Reviews</a>
+        <a href="guides/index.html">Guides</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="newsletter.html">Newsletter</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="disclosure.html">Affiliate Disclosure</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="contact.html">Report an issue</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 GeekDeal Digest. All rights reserved. Made for gamers in the US 🇺🇸</p>
+  </footer>
+
+  <script src="assets/supabase.js"></script>
+  <script src="assets/deals-render.js"></script>
+  <script>GeekDealRender.initHomePage();</script>
+
+</body>
+</html>
