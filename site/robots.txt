@@ -1,0 +1,13 @@
+# robots.txt — GeekDeal Digest
+# https://geekdealdigest.com
+
+User-agent: *
+Allow: /
+
+# Bloqueia rastreamento de parâmetros de filtro (evita conteúdo duplicado)
+Disallow: /deals/?store=
+Disallow: /deals/?sort=
+Disallow: /deals/?page=
+
+# Sitemap
+Sitemap: https://geekdealdigest.com/sitemap.xml
