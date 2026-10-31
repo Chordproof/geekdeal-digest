@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deals — GeekDeal Digest</title>
+  <meta name="description" content="Verified deals on PC hardware, gaming gear, tech and geek products for the US. Filter by store, sort by discount or price, every card timestamped.">
+  <link rel="canonical" href="https://geekdealdigest.com/deals/">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="../index.html">🎮 GeekDeal Digest</a>
+    <nav aria-label="Main navigation">
+      <a href="../deals/index.html">Deals</a>
+      <a href="../reviews/index.html">Reviews</a>
+      <a href="../guides/index.html">Guides</a>
+      <a href="../reviews/index.html">News</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <h1>Game and tech deals, checked by machine.</h1>
+      <p class="subtitle">Every price below comes from the store's own feed and is stamped with the time of the check. If the discount is not real, the deal does not appear.</p>
+
+      <div class="filters">
+        <div id="store-filters" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+        <select id="deal-sort" aria-label="Sort deals">
+          <option value="recent">Recently verified</option>
+          <option value="discount">Biggest discount</option>
+          <option value="price">Lowest price</option>
+          <option value="score">Best score</option>
+        </select>
+      </div>
+
+      <div id="deals-container" class="card-grid"></div>
+
+      <h2>How this list is built</h2>
+      <p>Our pipeline runs every 6 hours and applies four gates before a deal reaches this page:</p>
+      <ul>
+        <li><strong>Real discount.</strong> The offer price must be below the list price reported by the same store. No baseline, no listing.</li>
+        <li><strong>Reasonable price history.</strong> A deal that is only "cheap" because the list price was inflated last week is discarded.</li>
+        <li><strong>Correct market.</strong> US and Canada only. A price that only exists in another region is not a deal for our readers.</li>
+        <li><strong>Working link.</strong> If the store link does not resolve, the deal is dropped instead of published broken.</li>
+      </ul>
+      <p>We do not claim to open the retailer's page or check stock. What we do claim is that the price and the timestamp are real.</p>
+
+      <aside class="disclosure-block" aria-label="Affiliate disclosure">
+        <strong>Affiliate disclosure:</strong> GeekDeal Digest participates in affiliate programmes.
+        When you click a store link and buy, we may earn a commission at no extra cost to you.
+        Cards show whether a link is an "Affiliate link" or a "Direct store link". Read our full
+        <a href="../disclosure.html">Affiliate Disclosure</a>.
+      </aside>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-cols">
+      <div>
+        <h3>Deals</h3>
+        <a href="../index.html">Home</a>
+        <a href="../deals/index.html">All deals</a>
+        <a href="../reviews/index.html">Reviews</a>
+        <a href="../guides/index.html">Guides</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../newsletter.html">Newsletter</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="../disclosure.html">Affiliate Disclosure</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Use</a>
+        <a href="../contact.html">Report an issue</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 GeekDeal Digest. All rights reserved. Made for gamers in the US 🇺🇸</p>
+  </footer>
+
+  <script src="../assets/supabase.js"></script>
+  <script src="../assets/deals-render.js"></script>
+  <script>GeekDealRender.initDealsPage();</script>
+
+</body>
+</html>
