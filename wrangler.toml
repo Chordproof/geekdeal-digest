@@ -1,0 +1,6 @@
+name = "geekdeal-digest"
+compatibility_date = "2026-10-20"
+
+[assets]
+directory = "./site"
+binding = "ASSETS"
