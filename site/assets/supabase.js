@@ -1,2 +1,2 @@
-const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
-const SUPABASE_ANON_KEY = "SUA-ANON-KEY";
+const SUPABASE_URL = "https://dzkbtgipmspwaglangep.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6a2J0Z2lwbXNwd2FnbGFuZ2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0OTE5NzUsImV4cCI6MjEwODA2Nzk3NX0.68cWjxc9tjVmeoPuZjQi75PK4hfWQrc1lX1hiyaZm8M";
