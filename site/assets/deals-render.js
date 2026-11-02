@@ -13,41 +13,33 @@ function renderDealCard(deal) {
   const hasAffiliate = Boolean(deal.affiliate_url);
   const href = hasAffiliate ? deal.affiliate_url : deal.product_url;
 
-  const storeName = deal.retailers ? deal.retailers.name : "";
+  const storeName = deal.retailer_name || "";
   const title = G.escapeHtml(deal.title);
-  const price = G.formatPrice(deal.offer_price, deal.currency);
-  const ref = G.formatPrice(deal.reference_price, deal.currency);
-
-  // Badge de desconto
-  const discount = deal.discount_pct
-    ? `<span class="deal-badge">-${Math.round(deal.discount_pct)}%</span>`
-    : "";
-
-  // Score
-  const score = (deal.score !== null && deal.score !== undefined)
-    ? `<span class="deal-score" title="GeekDeal score">Score ${G.escapeHtml(String(deal.score))}</span>`
-    : "";
+  const price = G.formatPrice(deal.price, deal.currency);
 
   // Rótulo obrigatório da disclosure
   const linkLabel = hasAffiliate
     ? `<span class="deal-link-label">Affiliate link</span>`
     : `<span class="deal-link-label">Direct store link</span>`;
 
-  const stamp = G.formatRelativeTime(deal.created_at);
+  const stamp = G.formatRelativeTime(deal.verified_at || deal.published_at);
+
+  // Categoria como badge discreto
+  const category = deal.category
+    ? `<span class="deal-badge">${G.escapeHtml(deal.category)}</span>`
+    : "";
 
   return `
   <article class="deal-card" data-slug="${G.escapeHtml(deal.slug)}">
     <div class="deal-card-top">
       <span class="deal-store">${G.escapeHtml(storeName)}</span>
-      ${discount}
+      ${category}
     </div>
     <h3 class="deal-title">${title}</h3>
     <div class="deal-prices">
       <span class="deal-price-now">${price}</span>
-      ${ref ? `<span class="deal-price-was">${ref}</span>` : ""}
     </div>
     <div class="deal-meta">
-      ${score}
       <span class="deal-verified">${stamp}</span>
     </div>
     <div class="deal-card-bottom">
