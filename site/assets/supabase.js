@@ -1,6 +1,6 @@
 /* ============================================================
-   GeekDeal Digest — cliente Supabase (REST)
-   Interface pública: window.GeekDeal
+   GeekDeal Digest - cliente Supabase (REST)
+   Interface publica: window.GeekDeal
    ============================================================ */
 
 const SUPABASE_URL = "https://dzkbtgipmspwaglangep.supabase.co";

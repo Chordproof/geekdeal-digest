@@ -1,20 +1,18 @@
 /* ============================================================
-   GeekDeal Digest — renderização das ofertas no site
-   Interface pública: window.GeekDealRender
-   Requer: assets/supabase.js carregado antes deste arquivo.
+   GeekDeal Digest - renderizacao das ofertas no site
+   Interface publica: window.GeekDealRender
    ============================================================ */
 
-// Acessa window.GeekDeal em tempo de execução (não no carregamento),
-// para não depender da ordem dos scripts no HTML.
+// Acessa window.GeekDeal em tempo de execucao (nao no carregamento),
+// para nao depender da ordem dos scripts no HTML.
 function G() {
   if (!window.GeekDeal) {
-    throw new Error("window.GeekDeal não carregado — verifique assets/supabase.js");
+    throw new Error("window.GeekDeal nao carregado - verifique assets/supabase.js");
   }
   return window.GeekDeal;
 }
 
 
-// Renderiza UM card de oferta e retorna o HTML pronto para injetar.
 function renderDealCard(deal) {
   const g = G();
 
@@ -26,13 +24,13 @@ function renderDealCard(deal) {
   const price = g.formatPrice(deal.price, deal.currency);
 
   const linkLabel = hasAffiliate
-    ? `<span class="deal-link-label">Affiliate link</span>`
-    : `<span class="deal-link-label">Direct store link</span>`;
+    ? '<span class="deal-link-label">Affiliate link</span>'
+    : '<span class="deal-link-label">Direct store link</span>';
 
   const stamp = g.formatRelativeTime(deal.verified_at || deal.published_at);
 
   const category = deal.category
-    ? `<span class="deal-badge">${g.escapeHtml(deal.category)}</span>`
+    ? '<span class="deal-badge">' + g.escapeHtml(deal.category) + '</span>'
     : "";
 
   return `
@@ -56,7 +54,6 @@ function renderDealCard(deal) {
 }
 
 
-// Injeta os cards dentro do container indicado.
 function renderDealsList(deals, containerId) {
   const box = document.getElementById(containerId);
   if (!box) return;
@@ -64,7 +61,6 @@ function renderDealsList(deals, containerId) {
 }
 
 
-// Placeholders animados enquanto carrega.
 function renderSkeleton(count, containerId) {
   const box = document.getElementById(containerId);
   if (!box) return;
@@ -76,11 +72,10 @@ function renderSkeleton(count, containerId) {
     <div class="sk-line sk-w40"></div>
   </div>`;
 
-  box.innerHTML = Array.from({ length: count }, () => card).join("");
+  box.innerHTML = Array.from({ length: count }, function () { return card; }).join("");
 }
 
 
-// Mensagem quando não há ofertas.
 function renderEmpty(containerId) {
   const box = document.getElementById(containerId);
   if (!box) return;
@@ -88,12 +83,11 @@ function renderEmpty(containerId) {
   box.innerHTML = `
   <div class="empty-state">
     <p>No deals match your filters right now.</p>
-    <p>Our pipeline refreshes every 6 hours — check back soon.</p>
+    <p>Our pipeline refreshes every 6 hours - check back soon.</p>
   </div>`;
 }
 
 
-// Mensagem amigável se o Supabase falhar.
 function renderError(containerId) {
   const box = document.getElementById(containerId);
   if (!box) return;
@@ -106,7 +100,6 @@ function renderError(containerId) {
 }
 
 
-// Página deals/index.html: lê query params, busca, renderiza e conecta filtros.
 async function initDealsPage() {
   const CONTAINER = "deals-container";
   const params = new URLSearchParams(window.location.search);
@@ -129,15 +122,15 @@ async function initDealsPage() {
     const filterBox = document.getElementById("store-filters");
 
     if (filterBox && retailers.length) {
-      const links = retailers.map(r => {
+      const links = retailers.map(function (r) {
         const active = state.store === r.slug;
         const url = new URL(window.location.href);
 
         if (active) url.searchParams.delete("store");
         else url.searchParams.set("store", r.slug);
 
-        return `<a class="store-filter${active ? " active" : ""}"
-                   href="${g.escapeHtml(url.pathname + url.search)}">${g.escapeHtml(r.name)}</a>`;
+        return '<a class="store-filter' + (active ? " active" : "") + '" href="' +
+          g.escapeHtml(url.pathname + url.search) + '">' + g.escapeHtml(r.name) + '</a>';
       });
 
       filterBox.innerHTML = links.join("");
@@ -161,7 +154,7 @@ async function initDealsPage() {
     const sortSel = document.getElementById("deal-sort");
     if (sortSel) {
       sortSel.value = state.sort;
-      sortSel.addEventListener("change", () => {
+      sortSel.addEventListener("change", function () {
         const url = new URL(window.location.href);
         url.searchParams.set("sort", sortSel.value);
         window.location.href = url.pathname + url.search;
@@ -175,7 +168,6 @@ async function initDealsPage() {
 }
 
 
-// Home: carrega as 3 melhores ofertas para "Deals of the Day".
 async function initHomePage() {
   const CONTAINER = "home-deals";
 
@@ -199,13 +191,12 @@ async function initHomePage() {
 }
 
 
-// Interface pública
 window.GeekDealRender = {
-  renderDealCard,
-  renderDealsList,
-  renderSkeleton,
-  renderEmpty,
-  renderError,
-  initDealsPage,
-  initHomePage
+  renderDealCard: renderDealCard,
+  renderDealsList: renderDealsList,
+  renderSkeleton: renderSkeleton,
+  renderEmpty: renderEmpty,
+  renderError: renderError,
+  initDealsPage: initDealsPage,
+  initHomePage: initHomePage
 };
