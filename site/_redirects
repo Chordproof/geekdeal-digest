@@ -1,0 +1,11 @@
+# Redirects — GeekDeal Digest
+# URLs do site antigo → novas URLs
+
+/game-deals.html          /deals/          301
+/game-deals              /deals/          301
+/news.html               /reviews/        301
+/news                    /reviews/        301
+/newsletter.html         /newsletter.html 200
+
+# Fallback: qualquer URL inexistente → 404 real
+/*                       /404.html        404
