@@ -38,6 +38,47 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
+function formatPrice(value, currency) {
+  if (value === null || value === undefined || value === "") return "";
+  const n = Number(value);
+  if (isNaN(n)) return "";
+  const cur = currency || "USD";
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: cur,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(n);
+  } catch (e) {
+    return "$" + n.toFixed(2);
+  }
+}
+
+function formatRelativeTime(iso) {
+  if (!iso) return "";
+  const then = new Date(iso).getTime();
+  if (isNaN(then)) return "";
+
+  const diffMs = Date.now() - then;
+  const mins = Math.floor(diffMs / 60000);
+
+  if (mins < 1) return "Verified just now";
+  if (mins < 60) return "Verified " + mins + " min ago";
+
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return "Verified " + hours + "h ago";
+
+  const days = Math.floor(hours / 24);
+  if (days < 30) return "Verified " + days + "d ago";
+
+  return "Verified " + new Date(iso).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+}
+
 async function getDeals(opts) {
   opts = opts || {};
   const limit = opts.limit || 24;
@@ -78,5 +119,7 @@ async function getRetailers() {
 window.GeekDeal = {
   getDeals: getDeals,
   getRetailers: getRetailers,
-  escapeHtml: escapeHtml
+  escapeHtml: escapeHtml,
+  formatPrice: formatPrice,
+  formatRelativeTime: formatRelativeTime
 };
