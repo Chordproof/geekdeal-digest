@@ -3,8 +3,6 @@
    Interface publica: window.GeekDealRender
    ============================================================ */
 
-// Acessa window.GeekDeal em tempo de execucao (nao no carregamento),
-// para nao depender da ordem dos scripts no HTML.
 function G() {
   if (!window.GeekDeal) {
     throw new Error("window.GeekDeal nao carregado - verifique assets/supabase.js");
