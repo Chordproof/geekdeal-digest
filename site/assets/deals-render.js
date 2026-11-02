@@ -4,35 +4,41 @@
    Requer: assets/supabase.js carregado antes deste arquivo.
    ============================================================ */
 
-const G = window.GeekDeal;
+// Acessa window.GeekDeal em tempo de execução (não no carregamento),
+// para não depender da ordem dos scripts no HTML.
+function G() {
+  if (!window.GeekDeal) {
+    throw new Error("window.GeekDeal não carregado — verifique assets/supabase.js");
+  }
+  return window.GeekDeal;
+}
 
 
 // Renderiza UM card de oferta e retorna o HTML pronto para injetar.
 function renderDealCard(deal) {
-  // Botão "See deal": usa affiliate_url quando existir, senão product_url.
+  const g = G();
+
   const hasAffiliate = Boolean(deal.affiliate_url);
   const href = hasAffiliate ? deal.affiliate_url : deal.product_url;
 
   const storeName = deal.retailer_name || "";
-  const title = G.escapeHtml(deal.title);
-  const price = G.formatPrice(deal.price, deal.currency);
+  const title = g.escapeHtml(deal.title);
+  const price = g.formatPrice(deal.price, deal.currency);
 
-  // Rótulo obrigatório da disclosure
   const linkLabel = hasAffiliate
     ? `<span class="deal-link-label">Affiliate link</span>`
     : `<span class="deal-link-label">Direct store link</span>`;
 
-  const stamp = G.formatRelativeTime(deal.verified_at || deal.published_at);
+  const stamp = g.formatRelativeTime(deal.verified_at || deal.published_at);
 
-  // Categoria como badge discreto
   const category = deal.category
-    ? `<span class="deal-badge">${G.escapeHtml(deal.category)}</span>`
+    ? `<span class="deal-badge">${g.escapeHtml(deal.category)}</span>`
     : "";
 
   return `
-  <article class="deal-card" data-slug="${G.escapeHtml(deal.slug)}">
+  <article class="deal-card" data-slug="${g.escapeHtml(deal.slug)}">
     <div class="deal-card-top">
-      <span class="deal-store">${G.escapeHtml(storeName)}</span>
+      <span class="deal-store">${g.escapeHtml(storeName)}</span>
       ${category}
     </div>
     <h3 class="deal-title">${title}</h3>
@@ -44,7 +50,7 @@ function renderDealCard(deal) {
     </div>
     <div class="deal-card-bottom">
       ${linkLabel}
-      <a class="deal-cta" href="${G.escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener">See deal</a>
+      <a class="deal-cta" href="${g.escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener">See deal</a>
     </div>
   </article>`;
 }
@@ -117,8 +123,9 @@ async function initDealsPage() {
   renderSkeleton(6, CONTAINER);
 
   try {
-    // 1) Filtros de loja
-    const retailers = await G.getRetailers();
+    const g = G();
+
+    const retailers = await g.getRetailers();
     const filterBox = document.getElementById("store-filters");
 
     if (filterBox && retailers.length) {
@@ -130,14 +137,13 @@ async function initDealsPage() {
         else url.searchParams.set("store", r.slug);
 
         return `<a class="store-filter${active ? " active" : ""}"
-                   href="${G.escapeHtml(url.pathname + url.search)}">${G.escapeHtml(r.name)}</a>`;
+                   href="${g.escapeHtml(url.pathname + url.search)}">${g.escapeHtml(r.name)}</a>`;
       });
 
       filterBox.innerHTML = links.join("");
     }
 
-    // 2) Ofertas da página corrente
-    const deals = await G.getDeals({
+    const deals = await g.getDeals({
       limit: PER_PAGE,
       offset: (state.page - 1) * PER_PAGE,
       store: state.store,
@@ -152,7 +158,6 @@ async function initDealsPage() {
 
     renderDealsList(deals, CONTAINER);
 
-    // 3) Ordenação
     const sortSel = document.getElementById("deal-sort");
     if (sortSel) {
       sortSel.value = state.sort;
@@ -177,7 +182,8 @@ async function initHomePage() {
   renderSkeleton(3, CONTAINER);
 
   try {
-    const deals = await G.getDeals({ limit: 3, sort: "score" });
+    const g = G();
+    const deals = await g.getDeals({ limit: 3, sort: "score" });
 
     if (!deals.length) {
       renderEmpty(CONTAINER);
