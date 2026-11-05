@@ -31,8 +31,14 @@ function renderDealCard(deal) {
     ? '<span class="deal-badge">' + g.escapeHtml(deal.category) + '</span>'
     : "";
 
+  const image = deal.image_url
+    ? '<div class="deal-image"><img src="' + g.escapeHtml(deal.image_url) +
+      '" alt="' + title + '" loading="lazy" width="231" height="87"></div>'
+    : '<div class="deal-image deal-image-empty"></div>';
+
   return `
   <article class="deal-card" data-slug="${g.escapeHtml(deal.slug)}">
+    ${image}
     <div class="deal-card-top">
       <span class="deal-store">${g.escapeHtml(storeName)}</span>
       ${category}
