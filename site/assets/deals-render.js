@@ -36,6 +36,14 @@ function renderDealCard(deal) {
       '" alt="' + title + '" loading="lazy" width="231" height="87"></div>'
     : '<div class="deal-image deal-image-empty"></div>';
 
+  const priceWas = (deal.price_was && Number(deal.price_was) > Number(deal.price))
+    ? '<span class="deal-price-was">' + g.formatPrice(deal.price_was, deal.currency) + '</span>'
+    : "";
+
+  const discount = (deal.discount_pct && Number(deal.discount_pct) > 0)
+    ? '<span class="deal-discount">-' + Math.round(deal.discount_pct) + '%</span>'
+    : "";
+
   return `
   <article class="deal-card" data-slug="${g.escapeHtml(deal.slug)}">
     ${image}
@@ -46,6 +54,8 @@ function renderDealCard(deal) {
     <h3 class="deal-title">${title}</h3>
     <div class="deal-prices">
       <span class="deal-price-now">${price}</span>
+      ${priceWas}
+      ${discount}
     </div>
     <div class="deal-meta">
       <span class="deal-verified">${stamp}</span>
