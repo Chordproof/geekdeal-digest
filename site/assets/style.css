@@ -366,3 +366,22 @@ footer{
 .deal-image-empty {
   background: linear-gradient(135deg, #1c1f28, #12141a);
 }
+/* Preço cheio riscado e badge de desconto */
+.deal-price-was {
+  color: #a2a7b8;
+  text-decoration: line-through;
+  font-size: .95rem;
+  margin-left: .4rem;
+}
+.deal-discount {
+  display: inline-block;
+  background: #22c55e;
+  color: #0b1a10;
+  font-size: .78rem;
+  font-weight: 800;
+  border-radius: 4px;
+  padding: .12rem .45rem;
+  margin-left: .45rem;
+  vertical-align: middle;
+  letter-spacing: .02em;
+}
