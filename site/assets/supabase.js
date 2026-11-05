@@ -25,7 +25,7 @@ function sbFetch(path, params = {}) {
     })
     .catch(function (err) {
       console.error("GeekDeal: falha ao carregar " + path + ":", err);
-      return []; // nunca quebra a página por causa da API
+      return [];
     });
 }
 
@@ -34,17 +34,17 @@ function getDeals(opts) {
   opts = opts || {};
 
   const params = {
-    select: "*,retailers(name,slug)",
+    select: "*",
     limit: opts.limit || 12,
     offset: opts.offset || 0
   };
 
-  if (opts.store) params["retailers.slug"] = "eq." + opts.store;
+  if (opts.store) params["retailer_slug"] = "eq." + opts.store;
   if (opts.market) params.market = "eq." + opts.market;
 
   const sortMap = {
     discount_desc: "discount_pct.desc.nullslast",
-    price_asc: "price_asc_placeholder",
+    price_asc: "price.asc.nullslast",
     verified_desc: "verified_at.desc.nullslast",
     score: "discount_pct.desc.nullslast"
   };
@@ -66,7 +66,7 @@ function getRetailers() {
   return sbFetch("retailers", { select: "name,slug", order: "name.asc" });
 }
 
-// Contagem exata de ofertas ativas (usa Content-Range + Prefer: count=exact)
+// Contagem exata de ofertas ativas
 function getStats() {
   const url = SUPABASE_URL + "/rest/v1/deals_public?select=slug&limit=0";
 
@@ -80,7 +80,7 @@ function getStats() {
     }
   })
     .then(function (res) {
-      const range = res.headers.get("content-range"); // ex.: "0-0/4312"
+      const range = res.headers.get("content-range");
       if (range && range.indexOf("/") !== -1) {
         return { totalDeals: parseInt(range.split("/")[1], 10) || 0 };
       }
