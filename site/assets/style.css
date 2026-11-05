@@ -348,3 +348,21 @@ footer{
   .deal-card-bottom{flex-direction:column;align-items:stretch}
   .deal-cta{text-align:center}
 }
+/* Imagem de capa do deal */
+.deal-image {
+  width: 100%;
+  aspect-ratio: 231 / 87;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #0f1117;
+  margin-bottom: .75rem;
+}
+.deal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.deal-image-empty {
+  background: linear-gradient(135deg, #1c1f28, #12141a);
+}
