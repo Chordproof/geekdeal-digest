@@ -401,6 +401,17 @@ async function initHomePage() {
   try {
     const g = G();
 
+    // Busca o destaque DIRETAMENTE pela coluna is_featured,
+    // independente de estar entre os 30 primeiros por desconto.
+    const featuredRows = await g.sbFetch("deals_public", {
+      select: "*",
+      is_featured: "eq.true",
+      limit: 1
+    });
+
+    const featured = (featuredRows && featuredRows.length) ? featuredRows[0] : null;
+
+    // Busca os deals do grid
     const deals = await g.getDeals({ limit: 30, sort: "discount_desc" });
 
     if (!deals.length) {
@@ -410,10 +421,15 @@ async function initHomePage() {
       return;
     }
 
-    const featured = pickFeatured(deals);
+    // Renderiza o destaque
     const featBox = document.getElementById(FEATURED);
-    if (featBox && featured) {
-      featBox.innerHTML = renderFeaturedCard(featured);
+    if (featBox) {
+      if (featured) {
+        featBox.innerHTML = renderFeaturedCard(featured);
+      } else {
+        const fallback = pickFeatured(deals);
+        featBox.innerHTML = fallback ? renderFeaturedCard(fallback) : "";
+      }
     }
 
     renderStats(deals);
