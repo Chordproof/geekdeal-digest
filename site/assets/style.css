@@ -189,6 +189,16 @@ li{margin-bottom:.5rem}
   border-radius:4px;
 }
 
+/* ---------- Alerta de idade da verificacao ---------- */
+.deal-verified-aging{
+  color:#f0b429;
+  font-weight:600;
+}
+.deal-verified-stale{
+  color:#ef4444;
+  font-weight:600;
+}
+
 .deal-card-bottom{
   display:flex;
   justify-content:space-between;
@@ -560,13 +570,4 @@ footer{
   .stat-value{font-size:1.35rem}
   .featured-card{padding:1.15rem}
   .featured-cta{align-self:stretch;text-align:center}
-}
-/* Alerta de idade da verificacao */
-.deal-verified-aging {
-  color: #f0b429;
-  font-weight: 600;
-}
-.deal-verified-stale {
-  color: #ef4444;
-  font-weight: 600;
 }
