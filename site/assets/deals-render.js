@@ -29,6 +29,14 @@ function renderDealCard(deal) {
 
   const stamp = g.formatRelativeTime(deal.verified_at || deal.published_at);
 
+  // Idade da verificacao: ambar > 24h, vermelho > 48h
+  const verifiedAt = new Date(deal.verified_at || deal.published_at).getTime();
+  const hoursOld = isNaN(verifiedAt) ? 0 : (Date.now() - verifiedAt) / 3600000;
+
+  let ageClass = "deal-verified";
+  if (hoursOld > 48) ageClass = "deal-verified deal-verified-stale";
+  else if (hoursOld > 24) ageClass = "deal-verified deal-verified-aging";
+
   const category = deal.category
     ? '<span class="deal-badge">' + g.escapeHtml(deal.category) + '</span>'
     : "";
@@ -60,7 +68,7 @@ function renderDealCard(deal) {
       ${discount}
     </div>
     <div class="deal-meta">
-      <span class="deal-verified">${stamp}</span>
+      <span class="${ageClass}">${stamp}</span>
     </div>
     <div class="deal-card-bottom">
       ${linkLabel}
