@@ -11,6 +11,20 @@ function G() {
 }
 
 
+/* ---------- Idade da verificacao ---------- */
+
+function ageClass(deal) {
+  const raw = deal.verified_at || deal.published_at;
+  const t = new Date(raw).getTime();
+  if (isNaN(t)) return "deal-verified";
+
+  const hours = (Date.now() - t) / 3600000;
+  if (hours > 48) return "deal-verified deal-verified-stale";
+  if (hours > 24) return "deal-verified deal-verified-aging";
+  return "deal-verified";
+}
+
+
 /* ---------- Card padrao ---------- */
 
 function renderDealCard(deal) {
@@ -28,14 +42,7 @@ function renderDealCard(deal) {
     : '<span class="deal-link-label">Direct store link</span>';
 
   const stamp = g.formatRelativeTime(deal.verified_at || deal.published_at);
-
-  // Idade da verificacao: ambar > 24h, vermelho > 48h
-  const verifiedAt = new Date(deal.verified_at || deal.published_at).getTime();
-  const hoursOld = isNaN(verifiedAt) ? 0 : (Date.now() - verifiedAt) / 3600000;
-
-  let ageClass = "deal-verified";
-  if (hoursOld > 48) ageClass = "deal-verified deal-verified-stale";
-  else if (hoursOld > 24) ageClass = "deal-verified deal-verified-aging";
+  const stampClass = ageClass(deal);
 
   const category = deal.category
     ? '<span class="deal-badge">' + g.escapeHtml(deal.category) + '</span>'
@@ -68,7 +75,7 @@ function renderDealCard(deal) {
       ${discount}
     </div>
     <div class="deal-meta">
-      <span class="${ageClass}">${stamp}</span>
+      <span class="${stampClass}">${stamp}</span>
     </div>
     <div class="deal-card-bottom">
       ${linkLabel}
@@ -78,7 +85,7 @@ function renderDealCard(deal) {
 }
 
 
-/* ---------- Card destaque (hero do deal) ---------- */
+/* ---------- Card destaque ---------- */
 
 function renderFeaturedCard(deal) {
   const g = G();
@@ -89,6 +96,7 @@ function renderFeaturedCard(deal) {
   const title = g.escapeHtml(deal.title);
   const price = g.formatPrice(deal.price, deal.currency);
   const stamp = g.formatRelativeTime(deal.verified_at || deal.published_at);
+  const stampClass = ageClass(deal);
 
   const image = deal.image_url
     ? '<div class="featured-image"><img src="' + g.escapeHtml(deal.image_url) +
@@ -116,7 +124,7 @@ function renderFeaturedCard(deal) {
           ${priceWas}
           ${discount}
         </div>
-        <div class="featured-meta">${stamp}</div>
+        <div class="featured-meta"><span class="${stampClass}">${stamp}</span></div>
         <a class="featured-cta" href="${g.escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener">See this deal →</a>
       </div>
     </div>
@@ -172,20 +180,20 @@ function renderError(containerId) {
 }
 
 
-/* ---------- Selecao do destaque ---------- */
+/* ---------- Selecao do destaque por relevancia comercial ---------- */
 
-// Escolhe o deal de destaque por relevancia comercial.
 // Combina desconto, preco final e notoriedade do titulo.
+// Evita que jogos obscuros de $0.42 dominem o hero.
 function pickFeatured(deals) {
   const MIN_PRICE = 4;
 
-  // Titulos AAA / alta notoriedade recebem bonus
   const AAA = [
     "hogwarts legacy", "borderlands 3", "mortal kombat", "monster hunter",
     "dragon ball", "robocop", "steelrising", "back 4 blood", "tomb raider",
     "plague tale", "batman", "middle-earth", "lego", "dishonored",
     "frostpunk", "this war of mine", "warhammer", "divinity", "disco elysium",
-    "talos principle", "children of morta", "rise of the tomb raider"
+    "talos principle", "children of morta", "rise of the tomb raider",
+    "war hospital", "crown wars", "soundfall", "encased", "roguebook"
   ];
 
   function score(d) {
@@ -193,10 +201,8 @@ function pickFeatured(deals) {
     const pct = Number(d.discount_pct) || 0;
     const title = String(d.title || "").toLowerCase();
 
-    // Desconto pesa 1x, preco final pesa 2x (evita lixo de $0.42)
     let s = pct + price * 2;
 
-    // Bonus de notoriedade
     if (AAA.some(function (k) { return title.indexOf(k) !== -1; })) {
       s += 25;
     }
@@ -213,6 +219,33 @@ function pickFeatured(deals) {
   return pool.slice().sort(function (a, b) {
     return score(b) - score(a);
   })[0] || null;
+}
+
+
+/* ---------- Stats ---------- */
+
+function renderStats(deals) {
+  const dealsEl = document.getElementById("stat-deals");
+  const storesEl = document.getElementById("stat-stores");
+  const discountEl = document.getElementById("stat-discount");
+
+  if (dealsEl) dealsEl.textContent = String(deals.length);
+
+  if (storesEl) {
+    const stores = {};
+    deals.forEach(function (d) {
+      if (d.retailer_slug) stores[d.retailer_slug] = true;
+    });
+    storesEl.textContent = String(Object.keys(stores).length);
+  }
+
+  if (discountEl) {
+    const max = deals.reduce(function (acc, d) {
+      const v = Number(d.discount_pct || 0);
+      return v > acc ? v : acc;
+    }, 0);
+    discountEl.textContent = max > 0 ? "-" + max + "%" : "—";
+  }
 }
 
 
@@ -341,7 +374,6 @@ async function initHomePage() {
   try {
     const g = G();
 
-    // Uma unica chamada: 30 deals ordenados por desconto
     const deals = await g.getDeals({ limit: 30, sort: "discount_desc" });
 
     if (!deals.length) {
@@ -351,17 +383,14 @@ async function initHomePage() {
       return;
     }
 
-    // Destaque
     const featured = pickFeatured(deals);
     const featBox = document.getElementById(FEATURED);
     if (featBox && featured) {
       featBox.innerHTML = renderFeaturedCard(featured);
     }
 
-    // Stats
     renderStats(deals);
 
-    // Grid inicial: 9 primeiros
     let currentStore = null;
 
     function paint() {
@@ -379,7 +408,6 @@ async function initHomePage() {
 
     paint();
 
-    // Chips
     renderStoreChips(deals, CHIPS, function (store) {
       currentStore = store;
       paint();
