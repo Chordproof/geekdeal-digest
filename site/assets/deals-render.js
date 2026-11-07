@@ -183,7 +183,7 @@ function renderError(containerId) {
 /* ---------- Selecao do destaque por relevancia comercial ---------- */
 
 // Combina desconto, preco final e notoriedade do titulo.
-// Evita que jogos obscuros de $0.42 dominem o hero.
+// Preco final pesa 4x para sinalizar "jogo grande por pouco dinheiro".
 function pickFeatured(deals) {
   const MIN_PRICE = 4;
 
@@ -201,7 +201,7 @@ function pickFeatured(deals) {
     const pct = Number(d.discount_pct) || 0;
     const title = String(d.title || "").toLowerCase();
 
-    let s = pct + price * 2;
+    let s = pct + price * 4;
 
     if (AAA.some(function (k) { return title.indexOf(k) !== -1; })) {
       s += 25;
