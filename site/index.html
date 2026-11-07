@@ -25,7 +25,7 @@
       <a href="deals/index.html">Deals</a>
       <a href="reviews/index.html">Reviews</a>
       <a href="guides/index.html">Guides</a>
-      <a href="reviews/index.html">News</a>
+      <a href="news.html">News</a>
       <a href="about.html">About</a>
     </nav>
   </header>
@@ -42,11 +42,37 @@
         </p>
       </section>
 
+      <section class="featured-section" aria-label="Deal of the day">
+        <div id="home-featured"></div>
+      </section>
+
+      <section class="stats-bar" aria-label="Deal statistics">
+        <div class="stat">
+          <span class="stat-value" id="stat-deals">—</span>
+          <span class="stat-label">deals verified</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-stores">—</span>
+          <span class="stat-label">stores tracked</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-discount">—</span>
+          <span class="stat-label">biggest discount</span>
+        </div>
+      </section>
+
       <section>
-        <h2>Deals of the Day</h2>
+        <div class="section-head">
+          <h2>Deals of the Day</h2>
+          <a class="section-link" href="deals/index.html">See all deals →</a>
+        </div>
+
+        <div id="home-filters" class="filters" aria-label="Filter by store"></div>
+
         <div id="home-deals" class="card-grid"></div>
-        <p style="margin-top:1rem">
-          <a href="deals/index.html">See all deals →</a>
+
+        <p class="grid-footer">
+          <a class="btn btn-secondary" href="deals/index.html">See all deals →</a>
         </p>
       </section>
 
@@ -83,8 +109,8 @@
       <aside class="disclosure-block" aria-label="Affiliate disclosure">
         <strong>Affiliate disclosure:</strong> GeekDeal Digest participates in affiliate programmes.
         When you click a store link and buy, we may earn a commission at no extra cost to you.
-        Cards show whether a link is an "Affiliate link" or a "Direct store link". Read our full
-        <a href="disclosure.html">Affiliate Disclosure</a>.
+        Cards show whether a link is an "Affiliate link" or a "Direct store link".
+        Read our full <a href="disclosure.html">Affiliate Disclosure</a>.
       </aside>
 
     </div>
@@ -100,8 +126,8 @@
         <a href="guides/index.html">Guides</a>
       </div>
       <div>
-        <h3>Company</h3>
-        <a href="about.html">About</a>
+        <h3>About</h3>
+        <a href="about.html">How we verify</a>
         <a href="contact.html">Contact</a>
         <a href="newsletter.html">Newsletter</a>
       </div>
