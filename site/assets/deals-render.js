@@ -180,36 +180,15 @@ function renderError(containerId) {
 }
 
 
-/* ---------- Selecao do destaque por relevancia comercial ---------- */
+/* ---------- Selecao do destaque ---------- */
 
-// Combina desconto, preco final e notoriedade do titulo.
-// Preco final pesa 4x para sinalizar "jogo grande por pouco dinheiro".
+// Destaque definido manualmente no banco pela coluna is_featured.
+// Fallback: maior desconto com preco >= 4 USD.
 function pickFeatured(deals) {
+  const manual = deals.filter(function (d) { return d.is_featured === true; });
+  if (manual.length) return manual[0];
+
   const MIN_PRICE = 4;
-
-  const AAA = [
-    "hogwarts legacy", "borderlands 3", "mortal kombat", "monster hunter",
-    "dragon ball", "robocop", "steelrising", "back 4 blood", "tomb raider",
-    "plague tale", "batman", "middle-earth", "lego", "dishonored",
-    "frostpunk", "this war of mine", "warhammer", "divinity", "disco elysium",
-    "talos principle", "children of morta", "rise of the tomb raider",
-    "war hospital", "crown wars", "soundfall", "encased", "roguebook"
-  ];
-
-  function score(d) {
-    const price = Number(d.price) || 0;
-    const pct = Number(d.discount_pct) || 0;
-    const title = String(d.title || "").toLowerCase();
-
-    let s = pct + price * 4;
-
-    if (AAA.some(function (k) { return title.indexOf(k) !== -1; })) {
-      s += 25;
-    }
-
-    return s;
-  }
-
   const eligible = deals.filter(function (d) {
     return Number(d.price) >= MIN_PRICE && Number(d.discount_pct) > 0;
   });
@@ -217,7 +196,7 @@ function pickFeatured(deals) {
   const pool = eligible.length ? eligible : deals;
 
   return pool.slice().sort(function (a, b) {
-    return score(b) - score(a);
+    return Number(b.discount_pct || 0) - Number(a.discount_pct || 0);
   })[0] || null;
 }
 
