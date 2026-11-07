@@ -166,10 +166,35 @@ function renderError(containerId) {
 
 /* ---------- Selecao do destaque ---------- */
 
-// Escolhe o deal de destaque: maior desconto com preco final >= 4 USD.
-// Evita que jogos de $0.42 dominem o hero.
+// Escolhe o deal de destaque por relevancia comercial.
+// Combina desconto, preco final e notoriedade do titulo.
 function pickFeatured(deals) {
   const MIN_PRICE = 4;
+
+  // Titulos AAA / alta notoriedade recebem bonus
+  const AAA = [
+    "hogwarts legacy", "borderlands 3", "mortal kombat", "monster hunter",
+    "dragon ball", "robocop", "steelrising", "back 4 blood", "tomb raider",
+    "plague tale", "batman", "middle-earth", "lego", "dishonored",
+    "frostpunk", "this war of mine", "warhammer", "divinity", "disco elysium",
+    "talos principle", "children of morta", "rise of the tomb raider"
+  ];
+
+  function score(d) {
+    const price = Number(d.price) || 0;
+    const pct = Number(d.discount_pct) || 0;
+    const title = String(d.title || "").toLowerCase();
+
+    // Desconto pesa 1x, preco final pesa 2x (evita lixo de $0.42)
+    let s = pct + price * 2;
+
+    // Bonus de notoriedade
+    if (AAA.some(function (k) { return title.indexOf(k) !== -1; })) {
+      s += 25;
+    }
+
+    return s;
+  }
 
   const eligible = deals.filter(function (d) {
     return Number(d.price) >= MIN_PRICE && Number(d.discount_pct) > 0;
@@ -178,37 +203,8 @@ function pickFeatured(deals) {
   const pool = eligible.length ? eligible : deals;
 
   return pool.slice().sort(function (a, b) {
-    return Number(b.discount_pct || 0) - Number(a.discount_pct || 0);
+    return score(b) - score(a);
   })[0] || null;
-}
-
-
-/* ---------- Stats ---------- */
-
-function renderStats(deals) {
-  const g = G();
-
-  const dealsEl = document.getElementById("stat-deals");
-  const storesEl = document.getElementById("stat-stores");
-  const discountEl = document.getElementById("stat-discount");
-
-  if (dealsEl) dealsEl.textContent = String(deals.length);
-
-  if (storesEl) {
-    const stores = {};
-    deals.forEach(function (d) {
-      if (d.retailer_slug) stores[d.retailer_slug] = true;
-    });
-    storesEl.textContent = String(Object.keys(stores).length);
-  }
-
-  if (discountEl) {
-    const max = deals.reduce(function (acc, d) {
-      const v = Number(d.discount_pct || 0);
-      return v > acc ? v : acc;
-    }, 0);
-    discountEl.textContent = max > 0 ? "-" + max + "%" : "—";
-  }
 }
 
 
