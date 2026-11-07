@@ -9,10 +9,11 @@
   --muted:#a2a7b8;
   --accent:#7fb2ff;
   --border:#2c3140;
+  --green:#22c55e;
+  --green-ink:#0b1a10;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-
 body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   background:var(--bg);
@@ -61,7 +62,6 @@ nav a:hover{color:var(--accent);text-decoration:none}
   margin:0 auto;
   padding:2rem 1.5rem;
 }
-
 main{min-height:60vh}
 
 h1{font-size:2.25rem;line-height:1.2;margin-bottom:.75rem}
@@ -83,7 +83,7 @@ li{margin-bottom:.5rem}
 .hero h1{font-size:2.75rem;max-width:800px}
 .hero p{font-size:1.15rem;color:var(--muted);max-width:700px}
 
-/* ---------- Botões ---------- */
+/* ---------- Botoes ---------- */
 .btn{
   display:inline-block;
   padding:.7rem 1.4rem;
@@ -114,6 +114,11 @@ li{margin-bottom:.5rem}
   display:flex;
   flex-direction:column;
   gap:.6rem;
+  transition:border-color .15s, transform .15s;
+}
+.deal-card:hover{
+  border-color:#3d4457;
+  transform:translateY(-2px);
 }
 
 .deal-card-top{
@@ -146,9 +151,28 @@ li{margin-bottom:.5rem}
   margin:0;
 }
 
-.deal-prices{display:flex;align-items:baseline;gap:.6rem}
+.deal-prices{
+  display:flex;
+  align-items:baseline;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
 .deal-price-now{font-size:1.4rem;font-weight:700;color:var(--text)}
-.deal-price-was{font-size:.95rem;color:var(--muted);text-decoration:line-through}
+.deal-price-was{
+  font-size:.95rem;
+  color:var(--muted);
+  text-decoration:line-through;
+}
+.deal-discount{
+  display:inline-block;
+  background:var(--green);
+  color:var(--green-ink);
+  font-size:.78rem;
+  font-weight:800;
+  border-radius:4px;
+  padding:.12rem .45rem;
+  letter-spacing:.02em;
+}
 
 .deal-meta{
   display:flex;
@@ -189,6 +213,174 @@ li{margin-bottom:.5rem}
 }
 .deal-cta:hover{text-decoration:none;opacity:.85}
 
+/* ---------- Imagem de capa ---------- */
+.deal-image{
+  width:100%;
+  aspect-ratio:231 / 87;
+  overflow:hidden;
+  border-radius:8px;
+  background:#0f1117;
+  margin-bottom:.75rem;
+}
+.deal-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.deal-image-empty{
+  background:linear-gradient(135deg,#1c1f28,#12141a);
+}
+
+/* ---------- Card destaque (Deal of the Day) ---------- */
+.featured-section{margin:2rem 0 1rem}
+
+.featured-card{
+  background:linear-gradient(135deg,#1f2430,#171a22);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.featured-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right, rgba(127,178,255,.10), transparent 60%);
+  pointer-events:none;
+}
+
+.featured-label{
+  display:inline-block;
+  background:var(--accent);
+  color:#0d1017;
+  font-size:.72rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  padding:.25rem .6rem;
+  border-radius:4px;
+  margin-bottom:1rem;
+}
+
+.featured-body{
+  display:grid;
+  grid-template-columns:minmax(0,320px) minmax(0,1fr);
+  gap:1.5rem;
+  align-items:center;
+}
+
+.featured-image{
+  width:100%;
+  aspect-ratio:231 / 87;
+  overflow:hidden;
+  border-radius:10px;
+  background:#0f1117;
+}
+.featured-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.featured-image-empty{
+  background:linear-gradient(135deg,#1c1f28,#12141a);
+}
+
+.featured-content{display:flex;flex-direction:column;gap:.5rem}
+
+.featured-store{
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--muted);
+}
+
+.featured-title{
+  font-size:1.6rem;
+  line-height:1.25;
+  margin:0;
+  color:var(--text);
+}
+
+.featured-prices{
+  display:flex;
+  align-items:baseline;
+  gap:.6rem;
+  flex-wrap:wrap;
+  margin-top:.25rem;
+}
+.featured-price-now{font-size:2rem;font-weight:800;color:var(--text)}
+.featured-price-was{
+  font-size:1.05rem;
+  color:var(--muted);
+  text-decoration:line-through;
+}
+.featured-discount{
+  display:inline-block;
+  background:var(--green);
+  color:var(--green-ink);
+  font-size:.9rem;
+  font-weight:800;
+  border-radius:5px;
+  padding:.18rem .6rem;
+}
+
+.featured-meta{font-size:.82rem;color:var(--muted)}
+
+.featured-cta{
+  align-self:flex-start;
+  margin-top:.5rem;
+  background:var(--accent);
+  color:#0d1017;
+  padding:.65rem 1.3rem;
+  border-radius:6px;
+  font-weight:700;
+  font-size:.95rem;
+  text-decoration:none;
+}
+.featured-cta:hover{text-decoration:none;opacity:.85}
+
+/* ---------- Barra de stats ---------- */
+.stats-bar{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.25rem;
+  margin:1.5rem 0 2rem;
+  text-align:center;
+}
+.stat{display:flex;flex-direction:column;gap:.15rem}
+.stat-value{
+  font-size:1.6rem;
+  font-weight:800;
+  color:var(--accent);
+  line-height:1.1;
+}
+.stat-label{
+  font-size:.8rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+/* ---------- Cabecalho de secao ---------- */
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.section-head h2{margin-bottom:.75rem}
+.section-link{font-size:.9rem;white-space:nowrap}
+
+.grid-footer{margin-top:1.5rem;text-align:center}
+
 /* ---------- Article card ---------- */
 .article-card{
   background:var(--card);
@@ -201,7 +393,12 @@ li{margin-bottom:.5rem}
 }
 .article-card h3{margin:0;font-size:1.1rem}
 .article-card p{color:var(--muted);font-size:.9rem;margin:0}
-.article-card .meta{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.article-card .meta{
+  font-size:.8rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
 
 /* ---------- Filtros ---------- */
 .filters{
@@ -220,9 +417,19 @@ li{margin-bottom:.5rem}
   border-radius:20px;
   font-size:.85rem;
   text-decoration:none;
+  font-family:inherit;
+  cursor:pointer;
+  transition:border-color .15s, color .15s;
 }
 .store-filter:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
 .store-filter.active{background:var(--accent);color:#0d1017;border-color:var(--accent)}
+
+.chip-count{
+  display:inline-block;
+  margin-left:.35rem;
+  font-size:.75rem;
+  opacity:.7;
+}
 
 select{
   background:var(--card);
@@ -312,7 +519,6 @@ footer{
   margin:0 0 .75rem;
   color:var(--text);
 }
-
 .footer-cols a{
   display:block;
   color:var(--muted);
@@ -336,6 +542,9 @@ footer{
 @media(max-width:900px){
   .hero h1{font-size:2rem}
   h1{font-size:1.75rem}
+  .featured-body{grid-template-columns:1fr}
+  .featured-title{font-size:1.35rem}
+  .featured-price-now{font-size:1.7rem}
 }
 
 @media(max-width:600px){
@@ -347,41 +556,8 @@ footer{
   .card-grid{grid-template-columns:1fr}
   .deal-card-bottom{flex-direction:column;align-items:stretch}
   .deal-cta{text-align:center}
-}
-/* Imagem de capa do deal */
-.deal-image {
-  width: 100%;
-  aspect-ratio: 231 / 87;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #0f1117;
-  margin-bottom: .75rem;
-}
-.deal-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.deal-image-empty {
-  background: linear-gradient(135deg, #1c1f28, #12141a);
-}
-/* Preço cheio riscado e badge de desconto */
-.deal-price-was {
-  color: #a2a7b8;
-  text-decoration: line-through;
-  font-size: .95rem;
-  margin-left: .4rem;
-}
-.deal-discount {
-  display: inline-block;
-  background: #22c55e;
-  color: #0b1a10;
-  font-size: .78rem;
-  font-weight: 800;
-  border-radius: 4px;
-  padding: .12rem .45rem;
-  margin-left: .45rem;
-  vertical-align: middle;
-  letter-spacing: .02em;
+  .stats-bar{grid-template-columns:1fr;gap:.75rem}
+  .stat-value{font-size:1.35rem}
+  .featured-card{padding:1.15rem}
+  .featured-cta{align-self:stretch;text-align:center}
 }
