@@ -271,10 +271,47 @@ function renderStoreChips(deals, containerId, onSelect) {
 }
 
 
+/* ---------- Paginacao ---------- */
+
+function renderPagination(state, total, perPage, containerId) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
+  if (totalPages <= 1) { box.innerHTML = ""; return; }
+
+  function pageUrl(p) {
+    const url = new URL(window.location.href);
+    if (p <= 1) url.searchParams.delete("page");
+    else url.searchParams.set("page", String(p));
+    return url.pathname + url.search;
+  }
+
+  const parts = [];
+
+  if (state.page > 1) {
+    parts.push('<a class="page-btn" href="' + pageUrl(state.page - 1) + '">← Previous</a>');
+  } else {
+    parts.push('<span class="page-btn page-btn-disabled">← Previous</span>');
+  }
+
+  parts.push('<span class="page-info">Page ' + state.page + ' of ' + totalPages + '</span>');
+
+  if (state.page < totalPages) {
+    parts.push('<a class="page-btn" href="' + pageUrl(state.page + 1) + '">Next →</a>');
+  } else {
+    parts.push('<span class="page-btn page-btn-disabled">Next →</span>');
+  }
+
+  box.innerHTML = parts.join("");
+}
+
+
 /* ---------- Pagina de deals ---------- */
 
 async function initDealsPage() {
   const CONTAINER = "deals-container";
+  const PAGER = "deals-pagination";
   const params = new URLSearchParams(window.location.search);
 
   const state = {
@@ -302,6 +339,8 @@ async function initDealsPage() {
         if (active) url.searchParams.delete("store");
         else url.searchParams.set("store", r.slug);
 
+        url.searchParams.delete("page");
+
         return '<a class="store-filter' + (active ? " active" : "") + '" href="' +
           g.escapeHtml(url.pathname + url.search) + '">' + g.escapeHtml(r.name) + '</a>';
       });
@@ -309,6 +348,7 @@ async function initDealsPage() {
       filterBox.innerHTML = links.join("");
     }
 
+    // Busca a pagina atual
     const deals = await g.getDeals({
       limit: PER_PAGE,
       offset: (state.page - 1) * PER_PAGE,
@@ -319,10 +359,17 @@ async function initDealsPage() {
 
     if (!deals.length) {
       renderEmpty(CONTAINER);
+      renderPagination(state, 0, PER_PAGE, PAGER);
       return;
     }
 
     renderDealsList(deals, CONTAINER);
+
+    // Busca o total para calcular as paginas
+    const stats = await g.getStats();
+    const total = stats.totalDeals || deals.length;
+
+    renderPagination(state, total, PER_PAGE, PAGER);
 
     const sortSel = document.getElementById("deal-sort");
     if (sortSel) {
@@ -330,6 +377,7 @@ async function initDealsPage() {
       sortSel.addEventListener("change", function () {
         const url = new URL(window.location.href);
         url.searchParams.set("sort", sortSel.value);
+        url.searchParams.delete("page");
         window.location.href = url.pathname + url.search;
       });
     }
@@ -408,6 +456,7 @@ window.GeekDealRender = {
   renderError: renderError,
   renderStats: renderStats,
   renderStoreChips: renderStoreChips,
+  renderPagination: renderPagination,
   pickFeatured: pickFeatured,
   initDealsPage: initDealsPage,
   initHomePage: initHomePage
