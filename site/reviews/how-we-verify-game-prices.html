@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="impact-site-verification" content="27bb67dc-4be1-4370-a1e0-87986f72ed62">
+  <title>How We Verify Game Prices (And Why Most Deal Sites Don't) | GeekDeal Digest</title>
+  <meta name="description" content="Most deal sites republish whatever a store feed sends them. Here is the four-step process we use to check every price against the store's own list price before we publish it.">
+  <link rel="canonical" href="https://geekdealdigest.com/reviews/how-we-verify-game-prices.html">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/article.css">
+
+  <meta property="og:title" content="How We Verify Game Prices (And Why Most Deal Sites Don't)">
+  <meta property="og:description" content="The four-step process behind every price on GeekDeal Digest.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://geekdealdigest.com/reviews/how-we-verify-game-prices.html">
+  <meta property="og:image" content="https://geekdealdigest.com/assets/img/verification-pipeline.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How We Verify Game Prices (And Why Most Deal Sites Don't)",
+    "datePublished": "2026-11-11",
+    "dateModified": "2026-11-11",
+    "author": { "@type": "Organization", "name": "GeekDeal Digest" },
+    "publisher": { "@type": "Organization", "name": "GeekDeal Digest" }
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="../index.html">🎮 GeekDeal Digest</a>
+    <nav aria-label="Main navigation">
+      <a href="../deals/index.html">Deals</a>
+      <a href="../reviews/index.html">Reviews</a>
+      <a href="../guides/index.html">Guides</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="article-wrap">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> <span>/</span>
+      <a href="../reviews/index.html">Reviews</a> <span>/</span>
+      <span>Methodology</span>
+    </nav>
+
+    <header class="article-head">
+      <p class="article-kicker">Methodology · November 11, 2026</p>
+      <h1>How We Verify Game Prices (And Why Most Deal Sites Don't)</h1>
+      <p class="article-deck">Most deal sites republish whatever a store feed sends them. That is how a game that has cost $2 for three years ends up with a "90% off" badge. Here is the four-step process we run before any price reaches this site.</p>
+      <div class="article-byline">
+        <span class="byline-dot"></span>
+        <span>GeekDeal Digest</span>
+        <span class="byline-sep">·</span>
+        <span>6 min read</span>
+      </div>
+    </header>
+
+    <figure class="article-figure">
+      <img src="../assets/img/verification-pipeline.png" alt="Diagram of the four-step price verification pipeline: store feed, price check, compare, publish" width="1536" height="864" loading="eager">
+      <figcaption>The four stages every deal passes through before it appears on GeekDeal Digest.</figcaption>
+    </figure>
+
+    <p class="lede">There is a structural problem with how game deal sites work, and almost nobody talks about it.</p>
+
+    <p>A store publishes a sale. The store's affiliate network pushes that sale into a feed. The feed lands in a database. A deal site renders the database. At no point in that chain does anyone ask a simple question: <strong>is this actually a good price?</strong></p>
+
+    <p>The answer is usually no. A "90% off" badge means the current price is 90% below the list price the publisher set — and publishers set list prices. A game that launched at $59.99, dropped to $19.99 permanently two years ago, and is now on sale for $5.99 will show as "90% off" against the original $59.99. Technically true. Practically misleading.</p>
+
+    <p>We built GeekDeal Digest to fix that. Here is exactly how.</p>
+
+    <h2>Step 1 — Pull from the store, not from a reseller</h2>
+
+    <p>Every price on this site starts with a live pull from the store's own feed. Not a third-party aggregator, not a cached snapshot, not a screenshot someone took last week.</p>
+
+    <p>This matters because aggregators introduce lag. A deal that expired four hours ago can still appear live on an aggregator that syncs twice a day. When you click through, you land on a full-price page and the deal site has already collected the click.</p>
+
+    <p>We pull directly. If the store says the price is $5.69, we record $5.69 — with the timestamp of the moment we read it.</p>
+
+    <h2>Step 2 — Check the sale price against the store's own list price</h2>
+
+    <p>This is the step most sites skip. We take two numbers from the same source, at the same moment:</p>
+
+    <ul>
+      <li><strong>The sale price</strong> — what the store is charging right now.</li>
+      <li><strong>The list price</strong> — what the store itself says the game normally costs.</li>
+    </ul>
+
+    <p>Both come from the store. We do not use historical averages, we do not use "lowest price ever recorded", and we do not use a publisher's suggested retail price from three years ago. The comparison is between two numbers the store is publishing today.</p>
+
+    <p>If a store does not publish a list price, we do not publish a discount percentage. We show the price and nothing else. A missing number is more honest than an invented one.</p>
+
+    <h2>Step 3 — Calculate the discount from those two numbers</h2>
+
+    <p>The percentage is arithmetic, not editorial:</p>
+
+    <p class="formula">discount = ((list price − sale price) / list price) × 100</p>
+
+    <p>No rounding up. No "up to 90% off" framing. If the math gives 89.4%, we show 89%, not 90%.</p>
+
+    <p>This sounds pedantic until you compare two sites side by side. One shows "90% off" on a $5.99 game. The other shows "89% off" on the same game. The second one is telling you the truth.</p>
+
+    <h2>Step 4 — Publish with a timestamp, and let it age visibly</h2>
+
+    <p>Every deal card carries the exact time we verified the price. Not "today", not "recently" — the timestamp.</p>
+
+    <p>Then the timestamp does something most sites would never allow: it ages in public.</p>
+
+    <table class="age-table">
+      <thead>
+        <tr>
+          <th>Age of verification</th>
+          <th>Marker</th>
+          <th>What it means</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Under 24 hours</td>
+          <td><span class="age-dot age-dot--fresh"></span> Fresh</td>
+          <td>Price confirmed today. Safe to buy.</td>
+        </tr>
+        <tr>
+          <td>24 to 48 hours</td>
+          <td><span class="age-dot age-dot--amber"></span> Aging</td>
+          <td>Price was correct yesterday. Re-check before buying.</td>
+        </tr>
+        <tr>
+          <td>Over 48 hours</td>
+          <td><span class="age-dot age-dot--red"></span> Stale</td>
+          <td>Price may have changed. Confirm on the store page.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Most deal sites hide the age of their data because stale data still earns clicks. We show it because a click that leads to a dead deal costs you money and costs us trust.</p>
+
+    <h2>What we do not do</h2>
+
+    <p>Being clear about the limits matters as much as describing the process.</p>
+
+    <ul>
+      <li><strong>We do not test games.</strong> We are not a review outlet. When we say a game is worth $5.69, we are talking about price relative to the market, not about whether you will enjoy it.</li>
+      <li><strong>We do not track historical lows.</strong> A price history chart requires months of continuous data. We are building that, but we do not have it yet, and we will not pretend otherwise.</li>
+      <li><strong>We do not cover every store.</strong> If a store is not in our pipeline, its deals are not on this site. That is a coverage gap, not a judgment.</li>
+      <li><strong>We do not guarantee prices.</strong> Stores change prices without notice. Our timestamp tells you when we last looked — it cannot tell you what the price is right now.</li>
+    </ul>
+
+    <h2>Why this matters for you</h2>
+
+    <p>A deal site's only real product is trust. If you click a "90% off" link and land on a full-price page, you stop trusting the next link. Three bad clicks and you never come back.</p>
+
+    <p>The verification process above is slower and more expensive than republishing a feed. It also means we publish fewer deals — some weeks, far fewer. But every deal we do publish has a number behind it that we can defend.</p>
+
+    <p>That is the whole proposition. Not the biggest list. The one you can check.</p>
+
+    <section class="next-up">
+      <h2>See it in practice</h2>
+      <p>The <a href="best-pc-game-deals-this-week.html">weekly roundup</a> applies this process to ten deals every week. Every card carries its verification timestamp — check any of them against the store page and see if we got it right.</p>
+    </section>
+
+    <p class="article-footer">Last updated November 11, 2026. This page describes our current process and will be revised as the pipeline changes.</p>
+
+  </main>
+
+  <footer>
+    <div class="footer-cols">
+      <div>
+        <h3>Deals</h3>
+        <a href="../index.html">Home</a>
+        <a href="../deals/index.html">All deals</a>
+        <a href="../reviews/index.html">Reviews</a>
+        <a href="../guides/index.html">Guides</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Use</a>
+        <a href="../contact.html">Report an issue</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 GeekDeal Digest. All rights reserved. Made for gamers in the US 🇺🇸</p>
+  </footer>
+
+</body>
+</html>
